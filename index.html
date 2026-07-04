@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1 Añito de Derek 🦁</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde-claro: #C8E6C9;
+    --verde-medio: #A5D6A7;
+    --verde-oscuro: #81C784;
+    --verde-profundo: #4CAF50;
+    --crema: #FFFDE7;
+    --arena: #FFF8E1;
+    --dorado: #F9A825;
+    --dorado-claro: #FFF176;
+    --marron-suave: #D7CCC8;
+    --blanco: #FFFFFF;
+    --texto: #2E7D32;
+    --texto-suave: #558B2F;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--crema);
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* ===================== PANTALLA SPLASH ===================== */
+  #splash {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, #D0F0C0 0%, #B2DFDB 40%, #C8E6C9 100%);
+    cursor: pointer;
+    overflow: hidden;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  #splash.hidden {
+    opacity: 0;
+    transform: scale(1.05);
+    pointer-events: none;
+  }
+
+  .splash-leaf {
+    position: absolute;
+    opacity: 0.35;
+    animation: floatLeaf linear infinite;
+  }
+
+  @keyframes floatLeaf {
+    0% { transform: translateY(-60px) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.35; }
+    90% { opacity: 0.35; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  .splash-icon {
+    font-size: 90px;
+    margin-bottom: 16px;
+    animation: bounce 2s ease-in-out infinite;
+    filter: drop-shadow(0 8px 16px rgba(0,0,0,0.15));
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
+  }
+
+  .splash-title {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(28px, 8vw, 48px);
+    color: #2E7D32;
+    text-align: center;
+    margin-bottom: 8px;
+    text-shadow: 0 3px 6px rgba(0,0,0,0.12);
+  }
+
+  .splash-subtitle {
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(14px, 4vw, 18px);
+    color: #558B2F;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .splash-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.08); opacity: 0.75; }
+  }
+
+  .splash-cta-icon {
+    font-size: 38px;
+  }
+
+  .splash-cta-text {
+    font-size: clamp(13px, 3.5vw, 16px);
+    color: #388E3C;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .splash-envelope {
+    width: 110px;
+    height: 80px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(76,175,80,0.25);
+    position: relative;
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+
+  .splash-envelope::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 50%;
+    background: linear-gradient(135deg, var(--verde-claro) 50%, transparent 50%),
+                linear-gradient(225deg, var(--verde-claro) 50%, transparent 50%);
+    background-size: 50% 100%;
+    background-position: left, right;
+    background-repeat: no-repeat;
+  }
+
+  /* ===================== MAIN CONTENT ===================== */
+  #main-content {
+    opacity: 0;
+    transition: opacity 1s ease 0.3s;
+  }
+
+  #main-content.visible {
+    opacity: 1;
+  }
+
+  /* ===================== HOJAS FONDO ===================== */
+  .bg-leaves {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .bg-leaf {
+    position: absolute;
+    opacity: 0.08;
+    font-size: clamp(60px, 12vw, 120px);
+  }
+
+  /* ===================== HERO ===================== */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(170deg, #D0F0C0 0%, #C8E6C9 50%, #B2DFDB 100%);
+    padding: 60px 20px 80px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0; right: 0;
+    height: 80px;
+    background: var(--crema);
+    clip-path: ellipse(55% 100% at 50% 100%);
+  }
+
+  .hero-animals {
+    position: absolute;
+    width: 100%;
+    bottom: 60px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    pointer-events: none;
+  }
+
+  .hero-animal {
+    font-size: clamp(35px, 8vw, 65px);
+    opacity: 0.6;
+    animation: sway 4s ease-in-out infinite;
+  }
+
+  .hero-animal:nth-child(2) { animation-delay: 1.5s; }
+  .hero-animal:nth-child(3) { animation-delay: 0.8s; }
+  .hero-animal:nth-child(4) { animation-delay: 2.2s; }
+
+  @keyframes sway {
+    0%, 100% { transform: rotate(-3deg) translateY(0); }
+    50% { transform: rotate(3deg) translateY(-8px); }
+  }
+
+  .hero-badge {
+    background: white;
+    border-radius: 50%;
+    width: clamp(110px, 28vw, 160px);
+    height: clamp(110px, 28vw, 160px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 40px rgba(76,175,80,0.3), 0 0 0 8px rgba(255,255,255,0.6);
+    margin-bottom: 28px;
+    animation: heroFloat 3s ease-in-out infinite;
+  }
+
+  @keyframes heroFloat {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-10px) rotate(2deg); }
+  }
+
+  .hero-badge-num {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(44px, 12vw, 72px);
+    color: var(--verde-profundo);
+    line-height: 1;
+  }
+
+  .hero-badge-text {
+    font-size: clamp(11px, 3vw, 14px);
+    color: var(--texto-suave);
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .hero-nombre {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(48px, 15vw, 96px);
+    color: #1B5E20;
+    line-height: 1.1;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.12), 0 0 40px rgba(255,255,255,0.5);
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-tagline {
+    font-size: clamp(16px, 4.5vw, 22px);
+    color: #2E7D32;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-tagline span {
+    display: inline-block;
+    background: white;
+    border-radius: 30px;
+    padding: 6px 18px;
+    box-shadow: 0 4px 16px rgba(76,175,80,0.2);
+  }
+
+  .hero-date-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    border-radius: 40px;
+    padding: 12px 24px;
+    font-size: clamp(13px, 3.5vw, 16px);
+    font-weight: 800;
+    color: var(--texto);
+    box-shadow: 0 6px 24px rgba(76,175,80,0.25);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===================== SECCIONES ===================== */
+  section {
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-wrap {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 60px 20px;
+  }
+
+  .section-title {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(22px, 6vw, 32px);
+    color: #1B5E20;
+    text-align: center;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 auto 32px;
+    max-width: 280px;
+  }
+
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--verde-medio), transparent);
+    border-radius: 2px;
+  }
+
+  .section-divider-icon {
+    font-size: 20px;
+  }
+
+  /* ===================== CONTADOR ===================== */
+  .countdown-section {
+    background: linear-gradient(135deg, #E8F5E9, #F1F8E9);
+  }
+
+  .countdown-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .countdown-item {
+    background: white;
+    border-radius: 20px;
+    padding: 20px 8px 14px;
+    text-align: center;
+    box-shadow: 0 6px 24px rgba(76,175,80,0.15);
+    border: 2px solid var(--verde-claro);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .countdown-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--verde-medio), var(--verde-profundo));
+  }
+
+  .countdown-num {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(28px, 8vw, 44px);
+    color: #2E7D32;
+    line-height: 1;
+    display: block;
+  }
+
+  .countdown-label {
+    font-size: clamp(9px, 2.5vw, 12px);
+    color: var(--texto-suave);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+
+  .countdown-finished {
+    text-align: center;
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(20px, 6vw, 28px);
+    color: #2E7D32;
+    padding: 20px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 6px 24px rgba(76,175,80,0.15);
+    animation: bounce 1.5s ease-in-out infinite;
+  }
+
+  /* ===================== INFO CARD ===================== */
+  .info-section {
+    background: var(--crema);
+  }
+
+  .info-card {
+    background: white;
+    border-radius: 28px;
+    padding: 32px 24px;
+    box-shadow: 0 12px 40px rgba(76,175,80,0.12);
+    border: 2px solid var(--verde-claro);
+  }
+
+  .info-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px dashed var(--verde-claro);
+  }
+
+  .info-row:last-child { border-bottom: none; }
+
+  .info-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    background: var(--verde-claro);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .info-content {}
+
+  .info-label {
+    font-size: 11px;
+    color: var(--texto-suave);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 3px;
+  }
+
+  .info-value {
+    font-size: clamp(14px, 4vw, 16px);
+    color: #1B5E20;
+    font-weight: 700;
+  }
+
+  /* ===================== GALERÍA ===================== */
+  .gallery-section {
+    background: linear-gradient(135deg, #F1F8E9, #E8F5E9);
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .gallery-item {
+    border-radius: 20px;
+    overflow: hidden;
+    aspect-ratio: 1;
+    box-shadow: 0 8px 24px rgba(76,175,80,0.2);
+    border: 3px solid white;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+  }
+
+  .gallery-item:hover,
+  .gallery-item:active {
+    transform: scale(1.04);
+    box-shadow: 0 12px 32px rgba(76,175,80,0.3);
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .gallery-item-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 60%, rgba(46,125,50,0.4));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 8000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .lightbox.open { display: flex; }
+
+  .lightbox img {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 20px; right: 20px;
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 44px; height: 44px;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    color: #333;
+  }
+
+  /* ===================== MAPA ===================== */
+  .map-section {
+    background: var(--crema);
+  }
+
+  .map-container {
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(76,175,80,0.2);
+    border: 3px solid white;
+    margin-bottom: 16px;
+  }
+
+  .map-container iframe {
+    width: 100%;
+    height: 300px;
+    border: none;
+    display: block;
+  }
+
+  .map-address-pill {
+    background: white;
+    border-radius: 16px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 16px rgba(76,175,80,0.12);
+    border: 2px solid var(--verde-claro);
+    margin-bottom: 16px;
+  }
+
+  .map-address-text {
+    font-size: 13px;
+    color: #2E7D32;
+    font-weight: 700;
+    flex: 1;
+  }
+
+  .btn-gps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 18px 24px;
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(14px, 4vw, 17px);
+    font-weight: 800;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(76,175,80,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    letter-spacing: 0.5px;
+  }
+
+  .btn-gps:hover,
+  .btn-gps:active {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(76,175,80,0.5);
+  }
+
+  .btn-gps-icon { font-size: 22px; }
+
+  /* ===================== CONFIRMACIÓN ===================== */
+  .rsvp-section {
+    background: linear-gradient(135deg, #E8F5E9, #DCEDC8);
+  }
+
+  .rsvp-card {
+    background: white;
+    border-radius: 28px;
+    padding: 32px 24px;
+    box-shadow: 0 12px 40px rgba(76,175,80,0.15);
+    border: 2px solid var(--verde-claro);
+  }
+
+  .rsvp-intro {
+    text-align: center;
+    font-size: clamp(13px, 3.5vw, 15px);
+    color: #558B2F;
+    font-weight: 700;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .rsvp-form-group {
+    margin-bottom: 16px;
+  }
+
+  .rsvp-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--texto-suave);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .rsvp-input, .rsvp-select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid var(--verde-claro);
+    border-radius: 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1B5E20;
+    background: #F9FBE7;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+  }
+
+  .rsvp-input:focus, .rsvp-select:focus {
+    border-color: var(--verde-profundo);
+    box-shadow: 0 0 0 3px rgba(76,175,80,0.2);
+  }
+
+  .rsvp-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .btn-rsvp {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, #66BB6A, #2E7D32);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(15px, 4.5vw, 18px);
+    font-weight: 800;
+    cursor: pointer;
+    margin-top: 20px;
+    box-shadow: 0 8px 24px rgba(76,175,80,0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .btn-rsvp:hover, .btn-rsvp:active {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(76,175,80,0.45);
+  }
+
+  /* Estado de éxito */
+  .rsvp-success {
+    display: none;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .rsvp-success.show { display: block; }
+
+  .rsvp-success-icon {
+    font-size: 60px;
+    margin-bottom: 12px;
+    animation: bounce 1.5s ease-in-out infinite;
+  }
+
+  .rsvp-success-title {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(20px, 6vw, 28px);
+    color: #2E7D32;
+    margin-bottom: 8px;
+  }
+
+  .rsvp-success-text {
+    font-size: 14px;
+    color: #558B2F;
+    font-weight: 700;
+    line-height: 1.6;
+  }
+
+  #rsvp-form-content {}
+
+  /* ===================== FOOTER ===================== */
+  .footer {
+    background: linear-gradient(135deg, #1B5E20, #2E7D32);
+    padding: 50px 20px;
+    text-align: center;
+    color: white;
+  }
+
+  .footer-name {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(24px, 7vw, 40px);
+    margin-bottom: 8px;
+    opacity: 0.95;
+  }
+
+  .footer-text {
+    font-size: clamp(13px, 3.5vw, 16px);
+    opacity: 0.8;
+    font-weight: 700;
+    margin-bottom: 24px;
+  }
+
+  .footer-animals {
+    font-size: clamp(22px, 6vw, 36px);
+    letter-spacing: 8px;
+    margin-bottom: 24px;
+  }
+
+  .footer-brand {
+    font-size: 11px;
+    opacity: 0.45;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ===================== FLOATING DECO ===================== */
+  .floating-leaves {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .fl {
+    position: absolute;
+    font-size: clamp(20px, 5vw, 40px);
+    opacity: 0.12;
+    animation: floatDeco 8s ease-in-out infinite;
+  }
+
+  @keyframes floatDeco {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    33% { transform: translateY(-12px) rotate(8deg); }
+    66% { transform: translateY(6px) rotate(-5deg); }
+  }
+
+  /* ===================== RESPONSIVE ===================== */
+  @media (max-width: 380px) {
+    .countdown-grid { grid-template-columns: repeat(2, 1fr); }
+    .rsvp-row { grid-template-columns: 1fr; }
+  }
+
+  /* ===================== SCROLL ANIMATIONS ===================== */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- ========== SPLASH ========== -->
+<div id="splash" onclick="openInvitation()">
+  <!-- Hojas animadas -->
+  <svg class="splash-leaf" style="top:-10px;left:10%;width:60px;animation-duration:6s;animation-delay:0s;" viewBox="0 0 60 80"><ellipse cx="30" cy="40" rx="20" ry="36" fill="#81C784" transform="rotate(-15,30,40)"/><line x1="30" y1="10" x2="30" y2="72" stroke="#4CAF50" stroke-width="2"/></svg>
+  <svg class="splash-leaf" style="top:-10px;left:40%;width:45px;animation-duration:8s;animation-delay:1.5s;" viewBox="0 0 60 80"><ellipse cx="30" cy="40" rx="18" ry="32" fill="#A5D6A7" transform="rotate(10,30,40)"/><line x1="30" y1="12" x2="30" y2="70" stroke="#66BB6A" stroke-width="2"/></svg>
+  <svg class="splash-leaf" style="top:-10px;left:70%;width:55px;animation-duration:7s;animation-delay:3s;" viewBox="0 0 60 80"><ellipse cx="30" cy="40" rx="22" ry="35" fill="#C8E6C9" transform="rotate(-8,30,40)"/><line x1="30" y1="8" x2="30" y2="74" stroke="#81C784" stroke-width="2"/></svg>
+  <svg class="splash-leaf" style="top:-10px;left:85%;width:40px;animation-duration:9s;animation-delay:0.7s;" viewBox="0 0 60 80"><ellipse cx="30" cy="40" rx="16" ry="30" fill="#A5D6A7" transform="rotate(20,30,40)"/><line x1="30" y1="14" x2="30" y2="68" stroke="#66BB6A" stroke-width="2"/></svg>
+  <svg class="splash-leaf" style="top:-10px;left:25%;width:50px;animation-duration:10s;animation-delay:2s;" viewBox="0 0 60 80"><ellipse cx="30" cy="40" rx="19" ry="33" fill="#DCEDC8" transform="rotate(-5,30,40)"/><line x1="30" y1="10" x2="30" y2="72" stroke="#AED581" stroke-width="2"/></svg>
+
+  <div class="splash-icon">🦁</div>
+  <div class="splash-title">¡Te llegó una invitación!</div>
+  <div class="splash-subtitle">Una celebración muy especial te espera 🌿</div>
+  
+  <div class="splash-cta">
+    <div class="splash-cta-icon">👆</div>
+    <div class="splash-cta-text">Tocá para abrir</div>
+  </div>
+</div>
+
+<!-- ========== LIGHTBOX ========== -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="Foto de Derek">
+</div>
+
+<!-- ========== CONTENIDO PRINCIPAL ========== -->
+<div id="main-content">
+
+  <!-- BG DECO -->
+  <div class="bg-leaves" aria-hidden="true">
+    <span class="bg-leaf" style="top:5%;left:2%">🍃</span>
+    <span class="bg-leaf" style="top:15%;right:3%">🌿</span>
+    <span class="bg-leaf" style="top:40%;left:1%">🍀</span>
+    <span class="bg-leaf" style="top:55%;right:2%">🌱</span>
+    <span class="bg-leaf" style="top:75%;left:3%">🍃</span>
+    <span class="bg-leaf" style="top:88%;right:4%">🌿</span>
+  </div>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="floating-leaves" aria-hidden="true">
+      <span class="fl" style="top:10%;left:8%;animation-delay:0s">🌿</span>
+      <span class="fl" style="top:20%;right:10%;animation-delay:2s">🍃</span>
+      <span class="fl" style="top:60%;left:5%;animation-delay:4s">🌱</span>
+      <span class="fl" style="top:70%;right:8%;animation-delay:1s">🍀</span>
+    </div>
+
+    <div class="hero-badge">
+      <span class="hero-badge-num">1</span>
+      <span class="hero-badge-text">añito</span>
+    </div>
+
+    <h1 class="hero-nombre">Derek</h1>
+    <div class="hero-tagline"><span>🦒 ¡Cumple su primer añito! 🦒</span></div>
+
+    <div class="hero-date-pill">
+      <span>📅</span>
+      <span>Sábado 11 de julio · 13 a 16 hs</span>
+    </div>
+
+    <div class="hero-animals" aria-hidden="true">
+      <span class="hero-animal">🦁</span>
+      <span class="hero-animal">🦒</span>
+      <span class="hero-animal">🐘</span>
+      <span class="hero-animal">🦓</span>
+    </div>
+  </section>
+
+  <!-- ========== CONTADOR ========== -->
+  <section class="countdown-section">
+    <div class="section-wrap">
+      <div class="fade-in">
+        <h2 class="section-title">🌿 Cuenta Regresiva 🌿</h2>
+        <div class="section-divider"><span class="section-divider-icon">🦋</span></div>
+        <div id="countdown-display"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== INFO DEL EVENTO ========== -->
+  <section class="info-section">
+    <div class="section-wrap">
+      <div class="fade-in">
+        <h2 class="section-title">🎈 El Gran Día 🎈</h2>
+        <div class="section-divider"><span class="section-divider-icon">🌸</span></div>
+        <div class="info-card">
+          <div class="info-row">
+            <div class="info-icon">🦁</div>
+            <div class="info-content">
+              <div class="info-label">El cumpleañero</div>
+              <div class="info-value">Derek · 1 añito</div>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon">📅</div>
+            <div class="info-content">
+              <div class="info-label">Fecha</div>
+              <div class="info-value">Sábado 11 de julio de 2026</div>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon">⏰</div>
+            <div class="info-content">
+              <div class="info-label">Horario</div>
+              <div class="info-value">13:00 hs a 16:00 hs</div>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon">🏡</div>
+            <div class="info-content">
+              <div class="info-label">Salón</div>
+              <div class="info-value">La Ochava</div>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon">📍</div>
+            <div class="info-content">
+              <div class="info-label">Dirección</div>
+              <div class="info-value">Av. Luro 5387, Gregorio de Laferrere, Buenos Aires</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== GALERÍA ========== -->
+  <section class="gallery-section">
+    <div class="section-wrap">
+      <div class="fade-in">
+        <h2 class="section-title">🌸 Galería de Fotos 🌸</h2>
+        <div class="section-divider"><span class="section-divider-icon">🦋</span></div>
+        <div class="gallery-grid">
+          <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="https://i.ibb.co/5xKhBKSp/DSC0258.jpg" alt="Derek foto 1" loading="lazy">
+            <div class="gallery-item-overlay"></div>
+          </div>
+          <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="https://i.ibb.co/FkMp28yb/DSC0011.jpg" alt="Derek foto 2" loading="lazy">
+            <div class="gallery-item-overlay"></div>
+          </div>
+          <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="https://i.ibb.co/Y7syWscj/DSC0119.jpg" alt="Derek foto 3" loading="lazy">
+            <div class="gallery-item-overlay"></div>
+          </div>
+          <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="https://i.ibb.co/hxqVzz26/DSC0239.jpg" alt="Derek foto 4" loading="lazy">
+            <div class="gallery-item-overlay"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== MAPA ========== -->
+  <section class="map-section">
+    <div class="section-wrap">
+      <div class="fade-in">
+        <h2 class="section-title">📍 ¿Cómo llegar? 📍</h2>
+        <div class="section-divider"><span class="section-divider-icon">🌿</span></div>
+
+        <div class="map-container">
+          <iframe
+            src="https://maps.google.com/maps?q=-34.743639,-58.594554&z=16&output=embed"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Mapa La Ochava">
+          </iframe>
+        </div>
+
+        <div class="map-address-pill">
+          <span style="font-size:22px">🏡</span>
+          <div>
+            <div style="font-size:11px;color:#558B2F;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px">Salón La Ochava</div>
+            <div class="map-address-text">Av. Luro 5387, Gregorio de Laferrere</div>
+          </div>
+        </div>
+
+        <a class="btn-gps" href="https://www.google.com/maps/dir/?api=1&destination=-34.743639,-58.594554&travelmode=driving" target="_blank" rel="noopener">
+          <span class="btn-gps-icon">🧭</span>
+          Iniciar navegación GPS
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== RSVP ========== -->
+  <section class="rsvp-section">
+    <div class="section-wrap">
+      <div class="fade-in">
+        <h2 class="section-title">🎉 Confirmar Asistencia 🎉</h2>
+        <div class="section-divider"><span class="section-divider-icon">🦁</span></div>
+
+        <div class="rsvp-card">
+          <div id="rsvp-form-content">
+            <p class="rsvp-intro">
+              ¡Nos encantaría contarte entre los invitados!<br>
+              Por favor confirmá tu asistencia antes del <strong>6 de julio 🌿</strong>
+            </p>
+
+            <div class="rsvp-form-group">
+              <label class="rsvp-label" for="rsvp-nombre">Tu nombre completo</label>
+              <input class="rsvp-input" type="text" id="rsvp-nombre" placeholder="Ej: María García" autocomplete="name">
+            </div>
+
+            <div class="rsvp-row">
+              <div class="rsvp-form-group">
+                <label class="rsvp-label" for="rsvp-adultos">Adultos</label>
+                <select class="rsvp-select" id="rsvp-adultos">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5+</option>
+                </select>
+              </div>
+              <div class="rsvp-form-group">
+                <label class="rsvp-label" for="rsvp-ninos">Niños</label>
+                <select class="rsvp-select" id="rsvp-ninos">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4+</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="rsvp-form-group">
+              <label class="rsvp-label" for="rsvp-asistencia">¿Podés asistir?</label>
+              <select class="rsvp-select" id="rsvp-asistencia">
+                <option value="">Seleccioná una opción</option>
+                <option value="si">🎉 ¡Sí, voy a estar!</option>
+                <option value="no">😢 No puedo asistir</option>
+                <option value="talvez">🤔 Tal vez, confirmo luego</option>
+              </select>
+            </div>
+
+            <div class="rsvp-form-group">
+              <label class="rsvp-label" for="rsvp-mensaje">Mensaje para la familia (opcional)</label>
+              <input class="rsvp-input" type="text" id="rsvp-mensaje" placeholder="Un mensajito con amor 💚" style="height:auto">
+            </div>
+
+            <button class="btn-rsvp" onclick="enviarConfirmacion()">
+              <span>🌿</span> Confirmar asistencia <span>🦁</span>
+            </button>
+          </div>
+
+          <div class="rsvp-success" id="rsvp-success">
+            <div class="rsvp-success-icon">🎊</div>
+            <div class="rsvp-success-title" id="success-title">¡Gracias!</div>
+            <div class="rsvp-success-text" id="success-text"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="footer-animals">🦁 🦒 🐘 🦓 🦋</div>
+    <div class="footer-name">Derek</div>
+    <div class="footer-text">¡Un añito lleno de amor y aventuras! 🌿</div>
+    <div class="footer-animals">🌿 🌸 🍃 🌱 🍀</div>
+    <div class="footer-brand">Nova Invite · Invitaciones Digitales Premium</div>
+  </footer>
+
+</div><!-- /main-content -->
+
+<script>
+// ===== SPLASH =====
+function openInvitation() {
+  const splash = document.getElementById('splash');
+  const main = document.getElementById('main-content');
+  splash.classList.add('hidden');
+  main.classList.add('visible');
+  setTimeout(() => { splash.style.display = 'none'; }, 900);
+  initScrollAnimations();
+  startCountdown();
+}
+
+// ===== GALERÍA / LIGHTBOX =====
+function openLightbox(el) {
+  const img = el.querySelector('img');
+  document.getElementById('lightbox-img').src = img.src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+// ===== COUNTDOWN =====
+function startCountdown() {
+  const eventDate = new Date('2026-07-11T13:00:00-03:00');
+
+  function update() {
+    const now = new Date();
+    const diff = eventDate - now;
+    const el = document.getElementById('countdown-display');
+
+    if (diff <= 0) {
+      el.innerHTML = '<div class="countdown-finished">🎊 ¡Hoy es el gran día de Derek! 🎊</div>';
+      return;
+    }
+
+    const dias  = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const segs  = Math.floor((diff % (1000 * 60)) / 1000);
+
+    el.innerHTML = `
+      <div class="countdown-grid">
+        <div class="countdown-item">
+          <span class="countdown-num">${String(dias).padStart(2,'0')}</span>
+          <span class="countdown-label">Días</span>
+        </div>
+        <div class="countdown-item">
+          <span class="countdown-num">${String(horas).padStart(2,'0')}</span>
+          <span class="countdown-label">Horas</span>
+        </div>
+        <div class="countdown-item">
+          <span class="countdown-num">${String(mins).padStart(2,'0')}</span>
+          <span class="countdown-label">Minutos</span>
+        </div>
+        <div class="countdown-item">
+          <span class="countdown-num">${String(segs).padStart(2,'0')}</span>
+          <span class="countdown-label">Segundos</span>
+        </div>
+      </div>`;
+  }
+
+  update();
+  setInterval(update, 1000);
+}
+
+// ===== RSVP =====
+function enviarConfirmacion() {
+  const nombre    = document.getElementById('rsvp-nombre').value.trim();
+  const adultos   = document.getElementById('rsvp-adultos').value;
+  const ninos     = document.getElementById('rsvp-ninos').value;
+  const asistencia = document.getElementById('rsvp-asistencia').value;
+  const mensaje   = document.getElementById('rsvp-mensaje').value.trim();
+
+  if (!nombre) { alert('Por favor ingresá tu nombre 🌿'); return; }
+  if (!asistencia) { alert('Por favor indicá si podés asistir 🦁'); return; }
+
+  document.getElementById('rsvp-form-content').style.display = 'none';
+
+  const success = document.getElementById('rsvp-success');
+  const title   = document.getElementById('success-title');
+  const text    = document.getElementById('success-text');
+
+  if (asistencia === 'si') {
+    title.textContent = `¡Gracias, ${nombre}! 🎉`;
+    text.innerHTML = `Tu confirmación fue recibida.<br>¡Te esperamos el <strong>11 de julio</strong> en La Ochava!<br><br>
+      🦁 ${adultos} adulto${adultos !== '1' ? 's' : ''} · ${ninos} niño${ninos !== '1' ? 's' : ''}<br>
+      ${mensaje ? `<br>💚 "<em>${mensaje}</em>"` : ''}`;
+  } else if (asistencia === 'no') {
+    title.textContent = `¡Gracias, ${nombre}!`;
+    text.innerHTML = `Lamentamos que no puedas estar 😢<br>Mandamos un enorme abrazo de parte de la familia de Derek 💚`;
+  } else {
+    title.textContent = `¡Gracias, ${nombre}!`;
+    text.innerHTML = `Entendemos que aún no sabés si podés ir.<br>Cuando lo confirmes avisanos 🌿<br>¡Te esperamos!`;
+  }
+
+  success.classList.add('show');
+
+  // Enviar por WhatsApp (opcional — abre WA con el resumen)
+  const waMsg = `🦁 *Confirmación — Cumpleaños de Derek*%0A%0A👤 *Nombre:* ${encodeURIComponent(nombre)}%0A👨‍👩‍👧 *Adultos:* ${adultos} | *Niños:* ${ninos}%0A✅ *Asistencia:* ${asistencia === 'si' ? '¡Sí va!' : asistencia === 'no' ? 'No puede' : 'Tal vez'}${mensaje ? `%0A💬 *Mensaje:* ${encodeURIComponent(mensaje)}` : ''}`;
+  // Descomentar la siguiente línea para que abra WhatsApp automáticamente:
+  // window.open(`https://wa.me/?text=${waMsg}`, '_blank');
+}
+
+// ===== SCROLL ANIMATIONS =====
+function initScrollAnimations() {
+  const els = document.querySelectorAll('.fade-in');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  els.forEach(el => obs.observe(el));
+}
+</script>
+
+</body>
+</html>
